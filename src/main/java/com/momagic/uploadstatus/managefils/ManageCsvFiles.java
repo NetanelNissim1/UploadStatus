@@ -51,4 +51,29 @@ public class ManageCsvFiles {
         }
         return item;
     };
+
+    public static List<ModelMoMagic> processUploadImei(String absolutePath) {
+        List<ModelMoMagic> inputList = new ArrayList<ModelMoMagic>();
+        try {
+            File inputF = new File(absolutePath);
+            InputStream inputFS = new FileInputStream(inputF);
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(inputFS))) {
+                inputList = br.lines().map(mapToItemImei).collect(Collectors.toList());
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+        return inputList;
+    }
+
+    private static Function<String, ModelMoMagic> mapToItemImei = (line) -> {
+        String[] p = line.split(COMMA);// a CSV has comma separated lines
+        ModelMoMagic item = new ModelMoMagic();
+        if (p.length > 0) {
+            item.setIMEI(p[0].replaceAll("\"", ""));
+        }
+        return item;
+    };
 }

@@ -78,6 +78,11 @@ public class Utils {
                             oneLine.append(item.getModel());
                             oneLine.append(CSV_SEPARATOR);
                             oneLine.append(item.getStatus());
+                            oneLine.append(CSV_SEPARATOR);
+                            if (item.getDidCalls() == null) {
+                                item.setDidCalls("no");
+                            }
+                            oneLine.append(item.getDidCalls());
                             bw.write(oneLine.toString());
                             bw.newLine();
                         }

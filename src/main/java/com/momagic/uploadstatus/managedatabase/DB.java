@@ -30,14 +30,11 @@ public class DB {
         }
     }
 
-    public static List<ModelMoMagic> selectStatus(List<ModelMoMagic> moMagic) {
+    public static List<ModelMoMagic> selectStatus(List<ModelMoMagic> moMagic, List<ModelMoMagic> moMImei) {
 
         /* preistalled_campaign */
 
         PreparedStatement statement = null;
-        int j = 1;
-        int x = 1;
-
         try {
             if (moMagic.size() > 0) {
                 StringBuilder sqlSelect = new StringBuilder();
@@ -70,19 +67,43 @@ public class DB {
                 }
 
                 Collections.sort(newMoMagicList);
+
                 int count = 0;
                 for (ModelMoMagic item : newMoMagicList) {
                     for (ModelMoMagic oldItem : moMagic) {
                         if (oldItem.getIMEI() == null || item.getIMEI() == null) {
                             continue;
                         }
-                        if (item.getIMEI().split(",")[0].equals(oldItem.getIMEI())) {
-                            oldItem.setStatus(item.getStatus());
-                            count++;
+                        String[] imei = item.getIMEI().split(",");
+                        if (imei.length == 1) {
+                            if (imei[0].trim().equals(oldItem.getIMEI().trim())) {
+                                oldItem.setStatus(item.getStatus());
+                                count++;
+                            }
+                        }
+
+                        if (imei.length == 2) {
+                            if (imei[0].trim().equals(oldItem.getIMEI().trim())
+                                    || imei[1].trim().equals(oldItem.getIMEI().trim())) {
+                                oldItem.setStatus(item.getStatus());
+                                count++;
+                            }
                         }
                     }
                 }
                 System.out.println("Count: " + count);
+                for (ModelMoMagic imei : moMImei) {
+                    for (ModelMoMagic oldItem : moMagic) {
+                        if (oldItem.getIMEI() == null) {
+                            continue;
+                        }
+                        if (imei.getIMEI().equals(oldItem.getIMEI())) {
+                            oldItem.setDidCalls("Yes");
+                            break;
+                        }
+                    }
+                }
+
                 return moMagic;
             }
 

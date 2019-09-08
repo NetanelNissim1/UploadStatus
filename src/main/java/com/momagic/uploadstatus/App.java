@@ -16,6 +16,8 @@ public final class App {
 
     public static String UploadMoMagic;
     public static String ExportMoMagic;
+    public static String UploadIMEI;
+    private static List<ModelMoMagic> moImei = new ArrayList<>();
 
     private App() {
     }
@@ -28,8 +30,23 @@ public final class App {
     public static void main(String[] args) {
         UploadMoMagic = ManageProperties.getProperties("UploadMoMagic");
         ExportMoMagic = ManageProperties.getProperties("ExportMoMagic");
+        UploadIMEI = ManageProperties.getProperties("UploadIMEI");
+
         DB.getConnection();
+        upload_imei(UploadIMEI);
         processFiles(UploadMoMagic);
+    }
+
+    private static void upload_imei(String path) {
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                moImei = ManageCsvFiles.processUploadImei(file.getAbsolutePath());
+            }
+
+        }
     }
 
     private static void processFiles(String path) {
@@ -39,9 +56,9 @@ public final class App {
         for (File file : listOfFiles) {
             if (file.isFile()) {
                 moMagic = ManageCsvFiles.processInputFile(file.getAbsolutePath());
-                
+
                 String ExportStatusMoMagic = "ExportStatusMoMagic.csv";
-                Utils.writeToCSV(ExportMoMagic, DB.selectStatus(moMagic), ExportStatusMoMagic);
+                Utils.writeToCSV(ExportMoMagic, DB.selectStatus(moMagic, moImei), ExportStatusMoMagic);
             }
         }
     }
