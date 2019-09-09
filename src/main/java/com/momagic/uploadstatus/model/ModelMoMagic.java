@@ -12,8 +12,6 @@ public class ModelMoMagic implements Comparable {
     private String model;
     private String status;
     private Timestamp lastUpdate;
-    private String yes = "Yes";
-    private String no = "No";
     private String didCalls;
 
     public String getActivationDate() {
@@ -84,14 +82,6 @@ public class ModelMoMagic implements Comparable {
     public int compareTo(Object o) {
         ModelMoMagic moMagic = (ModelMoMagic) o;
         return this.lastUpdate.compareTo(moMagic.lastUpdate);
-    }
-
-    public String getYes() {
-        return yes;
-    }
-
-    public String getNo() {
-        return no;
     }
 
     public String getDidCalls() {
