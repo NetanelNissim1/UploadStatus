@@ -47,6 +47,10 @@ public class ManageCsvFiles {
                 item.setAndroidId(p[3].replaceAll("\"", ""));
                 item.setAndroidVersion(p[4].replaceAll("\"", ""));
                 item.setModel(p[5].replaceAll("\"", ""));
+                item.setStatus(p[6].replaceAll("\"", ""));
+                item.setNumberOfContacts(p[7].replaceAll("\"", ""));
+                item.setMadeACall(p[8].replaceAll("\"", ""));
+                item.setUninstalled(p[9].replaceAll("\"", ""));
             }
         }
         return item;

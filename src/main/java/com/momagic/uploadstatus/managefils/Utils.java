@@ -79,10 +79,11 @@ public class Utils {
                             oneLine.append(CSV_SEPARATOR);
                             oneLine.append(item.getStatus());
                             oneLine.append(CSV_SEPARATOR);
-                            if (item.getDidCalls() == null) {
-                                item.setDidCalls("no");
-                            }
-                            oneLine.append(item.getDidCalls());
+                            oneLine.append(item.getNumberOfContacts());
+                            oneLine.append(CSV_SEPARATOR);
+                            oneLine.append(item.getMadeACall());
+                            oneLine.append(CSV_SEPARATOR);
+                            oneLine.append(item.getUninstalled());
                             bw.write(oneLine.toString());
                             bw.newLine();
                         }

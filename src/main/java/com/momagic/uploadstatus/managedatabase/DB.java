@@ -68,6 +68,7 @@ public class DB {
 
                 Collections.sort(newMoMagicList);
 
+                String status = "#N/A";
                 int count = 0;
                 for (ModelMoMagic item : newMoMagicList) {
                     for (ModelMoMagic oldItem : moMagic) {
@@ -77,32 +78,40 @@ public class DB {
                         String[] imei = item.getIMEI().split(",");
                         if (imei.length == 1) {
                             if (imei[0].trim().equals(oldItem.getIMEI().trim())) {
-                                oldItem.setStatus(item.getStatus());
-                                count++;
+                                if (status.equals(oldItem.getStatus())) {
+                                    oldItem.setStatus(item.getStatus());
+                                    count++;
+                                }
+
                             }
                         }
 
                         if (imei.length == 2) {
                             if (imei[0].trim().equals(oldItem.getIMEI().trim())
                                     || imei[1].trim().equals(oldItem.getIMEI().trim())) {
-                                oldItem.setStatus(item.getStatus());
-                                count++;
+
+                                if (status.equals(oldItem.getStatus())) {
+                                    oldItem.setStatus(item.getStatus());
+                                    count++;
+                                }
                             }
                         }
                     }
                 }
+
                 System.out.println("Count: " + count);
-                for (ModelMoMagic imei : moMImei) {
-                    for (ModelMoMagic oldItem : moMagic) {
-                        if (oldItem.getIMEI() == null) {
-                            continue;
-                        }
-                        if (imei.getIMEI().equals(oldItem.getIMEI())) {
-                            oldItem.setDidCalls("Yes");
-                            break;
-                        }
-                    }
-                }
+
+                // for (ModelMoMagic imei : moMImei) {
+                // for (ModelMoMagic oldItem : moMagic) {
+                // if (oldItem.getIMEI() == null) {
+                // continue;
+                // }
+                // if (imei.getIMEI().equals(oldItem.getIMEI())) {
+                // oldItem.setDidCalls("Yes");
+                // break;
+                // }
+                // }
+                // }
 
                 return moMagic;
             }

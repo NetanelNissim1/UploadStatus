@@ -13,6 +13,9 @@ public class ModelMoMagic implements Comparable {
     private String status;
     private Timestamp lastUpdate;
     private String didCalls;
+    private String numberOfContacts;
+    private String madeACall;
+    private String uninstalled;
 
     public String getActivationDate() {
         return activationDate;
@@ -90,6 +93,30 @@ public class ModelMoMagic implements Comparable {
 
     public void setDidCalls(String didCalls) {
         this.didCalls = didCalls;
+    }
+
+    public String getNumberOfContacts() {
+        return numberOfContacts;
+    }
+
+    public void setNumberOfContacts(String numberOfContacts) {
+        this.numberOfContacts = numberOfContacts;
+    }
+
+    public String getMadeACall() {
+        return madeACall;
+    }
+
+    public void setMadeACall(String madeACall) {
+        this.madeACall = madeACall;
+    }
+
+    public String getUninstalled() {
+        return uninstalled;
+    }
+
+    public void setUninstalled(String uninstalled) {
+        this.uninstalled = uninstalled;
     }
 
 }
